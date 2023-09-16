@@ -1,4 +1,3 @@
-# Define a list of quiz questions as dictionaries
 quiz_questions = [
     {
         "question": "What is the capital of France?",
