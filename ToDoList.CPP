@@ -20,35 +20,22 @@ bool validateInput(string user_input);
 void fullView(ToDoList main_object);
 void quickView(ToDoList main_object);
 void viewListMenu(ToDoList main_object);
-
-// Loads data from text file into main object queue
 void loadFile(ToDoList main_object) {
-	
-	// Erase currently stored memory
 	main_object.queues.clear();
-
 	ifstream file;
 	string user_input;
-	int line_counter = 0; // Counts which line getline is at
-	int queue_counter = 0; // Counts how many total tasks have been retrived
-
-	// Prompt user
+	int line_counter = 0; 
+	int queue_counter = 0;
 	cout << endl << "What is the file name? (Default = 'tasks.txt')" << endl;
 	cout << ": ";
 	cin >> user_input;
 	cout << endl;
-
 	file.open(user_input);
-	
-	// Clear buffer
 	cin.clear();
 	cin.ignore();
-
-	// Validation of input file
 	if (file.is_open()) {
 		string line;
 		ToDoList tempObj = main_object;
-
 		while(getline(file, line))
 		{
 			switch (line_counter)
@@ -77,12 +64,8 @@ void loadFile(ToDoList main_object) {
 	cout << "Loaded file successfully." << endl << endl;
 	mainMenu(main_object);
 }
-
-// Saves vector holding ToDoList objects to text file
 void saveToFile(ToDoList main_object) {
 	string user_input;
-
-	// Prompt user
 	cout << endl << "What is the file name? (Default = 'tasks.txt')" << endl;
 	cout << ": ";
 	cin >> user_input;
@@ -116,18 +99,12 @@ void saveToFile(ToDoList main_object) {
 
 void newItemMenu(ToDoList main_object) {
 	
-	// Holds user input
 	string user_input;
 	string title = "";
 	string description = "";
-
-	// Create list object
 	ToDoList newList = main_object;
 
-	// Prompt user
 	cout << endl << "To add a new list, fill out a title, and description (optional)." << endl << endl;
-	
-	// Get title and description with input validation
 	while (true)
 	{
 		cout << "Please enter title: " << endl;
@@ -143,15 +120,9 @@ void newItemMenu(ToDoList main_object) {
 
 		continue;
 	}
-
-	// Store title and description
 	newList.title = title;
 	newList.description = description;
-
-	// Add object to list of tasks
 	main_object.queues.push_back(newList);
-
-	// Add more?
 	while (true) {
 		string retry;
 		cout << "Do you want to add another one? (Y or N)" << endl;
@@ -183,8 +154,6 @@ void deleteItemMenu(ToDoList main_object) {
 	
 	string user_input;
 	int int_user_input;
-
-	// Prompt user
 	cout << " Deletion Menu: " << endl << endl;
 	cout << " 1. Delete newest task" << endl;
 	cout << " 2. Delete a specific task" << endl;
@@ -192,14 +161,9 @@ void deleteItemMenu(ToDoList main_object) {
 	cout << ": ";
 	cin >> user_input;
 	cout << endl;
-
-	// Clear buffer
 	cin.clear();
 	cin.ignore();
-
-	// If valid convert
 	if (validateInput(user_input)) {
-		// Convert input to int
 		stringstream ss(user_input);
 		ss >> int_user_input;
 	}
@@ -228,7 +192,6 @@ void deleteItemMenu(ToDoList main_object) {
 	return;
 }
 
-// Deletes newest added entry (last)
 void deleteRecent(ToDoList main_object) {
 	
 	if (main_object.queues.size() > 0) {
@@ -241,13 +204,9 @@ void deleteRecent(ToDoList main_object) {
 
 	deleteItemMenu(main_object);
 }
-
-// Deletes at a specific position in stack
 void deleteAtPos(ToDoList main_object) {
 	string user_input;
 	int int_user_input;
-
-	// Prompt user
 	cout << "What is the title of the task?" << endl;
 	cout << ": ";
 	cin >> user_input;
@@ -269,7 +228,6 @@ void deleteAtPos(ToDoList main_object) {
 	deleteItemMenu(main_object);
 }
 
-// Views menus
 void quickView(ToDoList main_object) {
 	
 	vector<ToDoList> temp = main_object.queues;
@@ -295,15 +253,11 @@ void quickView(ToDoList main_object) {
 void fullView(ToDoList main_object) {
 	
 	string user_input;
-
-	// Prompt user
 	cout << "What is the title of the task?" << endl;
 	cout << ": ";
 	cin >> user_input;
 
 	cout << endl;
-
-	// Check through tasks
 	for (int i = 0; i < main_object.queues.size(); i++)
 	{
 		if (!(user_input == main_object.queues[i].title)) {
@@ -328,8 +282,6 @@ void viewListMenu(ToDoList main_object) {
 	
 	string user_input;
 	int int_user_input;
-
-	// Prompt user
 	cout << " Views Menu: " << endl << endl;
 	cout << " 1. Quick view" << endl;
 	cout << " 2. Full view" << endl;
@@ -339,10 +291,7 @@ void viewListMenu(ToDoList main_object) {
 	cout << ": ";
 	cin >> user_input;
 	cout << endl;
-
-	// If valid convert
 	if (validateInput(user_input)) {
-		// Convert input to int
 		stringstream ss(user_input);
 		ss >> int_user_input;
 	}
@@ -365,34 +314,20 @@ void viewListMenu(ToDoList main_object) {
 }
 
 bool validateInput(string user_input) {
-	
 	bool inputValid = false;
-
-	// Holds int of user input
 	int int_user_input;
-
-	// Convert input to int
 	stringstream ss(user_input);
-
 	if (ss >> int_user_input) {
 		return true;
 	}
 	else {
-		// Clear ss
 		ss.clear();
 		return false;
 	}
 }
-
 void mainMenu(ToDoList main_object) {
-
-	// Holds int of user input
 	int int_user_input;
-
-	// Holds user input
 	string user_input;
-
-	// Prompt user
 	cout << " Main Menu: " << endl << endl;
 	cout << " 1. Add a new item" << endl;
 	cout << " 2. Delete a item" << endl;
@@ -402,15 +337,10 @@ void mainMenu(ToDoList main_object) {
 	cout << " 6. Exit" << endl << endl;
 	cout << ": ";
 	cin >> user_input;
-
 	cout << endl;
-
 	cin.clear();
 	cin.ignore();
-
-	// If valid convert
 	if (validateInput(user_input)) {
-		// Convert input to int
 		stringstream ss(user_input);
 		ss >> int_user_input;
 	}
@@ -418,8 +348,6 @@ void mainMenu(ToDoList main_object) {
 		cout << "Error: Invalid selection" << endl << endl;
 		mainMenu(main_object);
 	}
-
-	// Decision switch
 	switch (int_user_input)
 	{
 		case 1:
@@ -445,19 +373,10 @@ void mainMenu(ToDoList main_object) {
 	}
 	return;
 }
-
-
 void driver() {
-
-	// List object
 	ToDoList main_object;
-
-	// Prompt menu
 	mainMenu(main_object);
 };
-
 int main() {
-
-	// Main driver
 	driver();
 }
